@@ -12,6 +12,7 @@ p.then((result) => console.log("Result", result)).catch((err) =>
   console.log("error", err.message)
 ); */
 
+/* //Promise based approach
 console.log("before");
 //const p = getuser(1);
 //p.then((user) => console.log("User info:", user));
@@ -20,7 +21,20 @@ getuser(1)
   .then((repos) => getCommits(repos[1]))
   .then((commits) => console.log("commits", commits))
   .catch((err) => console.log("Error", err.message));
-console.log("after");
+console.log("after"); */
+
+//Async and Await approach
+async function displaycommits() {
+  try {
+    const user = await getuser(1);
+    const repos = await getRepositories(user.gitHubUsername);
+    const commits = await getCommits(repos);
+    console.log("commits");
+  } catch (err) {
+    console.log("error", err.message);
+  }
+}
+displaycommits();
 
 function getuser(id) {
   return new Promise((resolve, reject) => {
@@ -36,6 +50,7 @@ function getRepositories(gitHubUsername) {
     setTimeout(() => {
       console.log("reading repos from github....");
       resolve(["repo1", "repo2", "repo3"]);
+      //reject(new Error("could not get the repos..."));
     }, 2000);
   });
 }
