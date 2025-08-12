@@ -47,15 +47,15 @@ function getRepositories(gitHubUsername, callback) {
 
 //Callback Hell - solution
 console.log("Before");
-getuser(1, getRepositories);
+getuser(1, displayRepositories);
 console.log("After");
 
-function getRepositories(user) {
+function displayRepositories(user) {
   getRepositories(user.gitHubUsername, getCommits);
 }
 
 function getCommits(repos) {
-  getCommits(repo, displaycommits);
+  getCommits(repos, displaycommits);
 }
 
 function displaycommits(commits) {
@@ -75,3 +75,31 @@ function getRepositories(gitHubUsername, callback) {
     callback(["repo1", "repo2", "repo3"]);
   }, 2000);
 }
+
+/* //callback nesting and naming anonymous functions
+console.log("Before");
+getuser(1, displayuser);
+console.log("After");
+
+function displayuser(user) {
+  console.log("User info:", user);
+  getRepositories(user.gitHubUsername, displayRepositories);
+}
+
+function displayRepositories(repos) {
+  console.log(repos);
+}
+
+function getuser(id, callback) {
+  setTimeout(() => {
+    console.log("reading user from db");
+    callback({ id: id, gitHubUsername: "jagan" });
+  }, 2000);
+}
+
+function getRepositories(gitHubUsername, callback) {
+  setTimeout(() => {
+    console.log("reading repos from github....");
+    callback(["repo1", "repo2", "repo3"]);
+  }, 2000);
+} */

@@ -1,4 +1,4 @@
-//creating promise object
+/* //creating promise object
 
 const p = new Promise((resolve, reject) => {
   console.log("hi");
@@ -10,4 +10,41 @@ const p = new Promise((resolve, reject) => {
 //consuming result/reject of the promise object
 p.then((result) => console.log("Result", result)).catch((err) =>
   console.log("error", err.message)
-);
+); */
+
+console.log("before");
+//const p = getuser(1);
+//p.then((user) => console.log("User info:", user));
+getuser(1)
+  .then((user) => getRepositories(user.gitHubUsername))
+  .then((repos) => getCommits(repos[1]))
+  .then((commits) => console.log("commits", commits))
+  .catch((err) => console.log("Error", err.message));
+console.log("after");
+
+function getuser(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("reading user from db.....");
+      resolve({ id: id, gitHubUsername: "jagan" });
+    }, 2000);
+  });
+}
+
+function getRepositories(gitHubUsername) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("reading repos from github....");
+      resolve(["repo1", "repo2", "repo3"]);
+    }, 2000);
+  });
+}
+
+function getCommits(repos) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("reading commits from github API....");
+      resolve(["commits"]);
+    }, 2000);
+  });
+}
